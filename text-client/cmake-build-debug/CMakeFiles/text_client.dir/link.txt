@@ -1,0 +1,1 @@
+/usr/bin/cc -g   CMakeFiles/text_client.dir/main.c.o  -o text_client 
