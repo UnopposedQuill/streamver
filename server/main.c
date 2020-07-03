@@ -50,7 +50,7 @@ int main() {
                "Port=%d\n"
                "MaxWaitingConnections=%d\n"
                "MaxConnectedClients=%d\n"
-               "ClientDatabase=\"%s\"\n", &puertoServidor, &maximoConexionesPendientes, &maximoClientesConectados, nombreArchivoClientes);
+               "ClientDatabase=%s\n", &puertoServidor, &maximoConexionesPendientes, &maximoClientesConectados, nombreArchivoClientes);
         //printf("%d\n", puertoCliente);
         fclose(archivoConfiguracion);
         printf("Archivo de configuración leído correctamente\n");

@@ -11,9 +11,9 @@ int main() {
         fscanf(archivoConfiguracion,
                "[SETUP]\n"
                "Port=%d\n"
-               "ServerIP=\"%s\"\n"
-               "Name=\"%s\"\n"
-               "Password=\"%s\"\n", &puertoServidor, serverIP, nombre, contrasenha);
+               "ServerIP=%s\n"
+               "Name=%s\n"
+               "Password=%s\n", &puertoServidor, serverIP, nombre, contrasenha);
         //printf("%d\n", puertoCliente);
         fclose(archivoConfiguracion);
         printf("Archivo de configuración leído correctamente\n");
