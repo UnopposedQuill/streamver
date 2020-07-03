@@ -121,68 +121,63 @@ int main() {
         if((new_socket = accept(server_fd, (struct sockaddr*) &address, (socklen_t*) &addrlen)) < 0){
             //No pudo aceptarla
             perror("\nError upon accepting a new connection");
+            continue;
         }
-        else {
-            //Pudo aceptarla
-            printf("Solicitud Entrante\n");
 
-            //Primero tengo que leer el primer byte, el cual me dirá qué acción tengo que tomar
-            if ((valread = read(new_socket, buffer, 1)) < 0) {
-                perror("Error upon reading new data\n");
-                continue;
+        //Pudo aceptarla
+        printf("Solicitud Entrante\n");
+
+        //Primero tengo que leer el primer byte, el cual me dirá qué acción tengo que tomar
+        if ((valread = read(new_socket, buffer, 1)) < 0) {
+            perror("Error upon reading new data\n");
+            continue;
+        }
+
+        //en este momento valread contiene la cantidad de bytes leídos
+        //Por ahora sólo le ordenaré al servidor imprimir todo lo que lee
+        char directiva = buffer[0] - '0';
+        switch (directiva) {
+            case 0: {
+                //tengo que registrar un nuevo usuario, primero creo las variables que guardarán su información
+                printf("Registrar\n");
+
+                do {
+                    memset(buffer, 0, BUFFER_SIZE);//Preparar el buffer
+
+                    //Leeré 30 caracteres hasta encontrar un salto de línea en el buffer
+                    valread = read(new_socket, buffer, 30);
+
+                    if (valread < 0) {
+                        perror("Error al leer el nombre del cliente\n");
+                        break;
+                    }
+                    // No hubo error al leer, sólo que no hay EOF, coloco lo que llevo en el archivo
+                    fprintf(archivoClientes, "%s", buffer);
+                } while (!strchr(buffer, '\n'));
+
+                if (valread < 0){
+                    break; //muevo el error hacia adelante para que salga del switch
+                }
+
+                //Coloco código de respuesta
+                strncpy(buffer, "1", 1);
+
+                if ((valread = send(new_socket, buffer, 1, 0)) < 0){
+                    perror("Error al comunicar estado de transacción\n");
+                }
+
+                close(new_socket);//Ya terminé con la conexión
+
+                fflush(archivoClientes);
+                break;
             }
-            //en este momento valread contiene la cantidad de bytes leídos
-            //Por ahora sólo le ordenaré al servidor imprimir todo lo que lee
-            char directiva = buffer[0] - '0';
-            switch (directiva) {
-                case 0: {
-                    //tengo que registrar un nuevo usuario, primero creo las variables que guardarán su información
-                    printf("Registrar\n");
+            case 1:{
+                //tengo que iniciar sesión con un usuario
+                printf("Iniciar Sesión\n");
 
-                    // leeré a lo sumo 30 bytes de nombre
-                    while ((valread = read(new_socket, buffer, 30)) != 0) { //Hasta encontrar un EOF
-                        if (valread < 0) {
-                            perror("Error al leer el nombre del cliente\n");
-                            break;
-                        }
-                        // No hubo error al leer, sólo que no hay EOF, coloco lo que llevo en el archivo
-                        fprintf(archivoClientes, "%s", buffer);
-                        memset(buffer, 0, BUFFER_SIZE);
-
-                        //strncpy(c->ipRegistrada, inet_ntoa(address.sin_addr), 16);
-                    }
-                    if (valread < 0){
-                        break; //muevo el error hacia adelante para que salga del switch
-                    }
-
-                    fprintf(archivoClientes, ";");//El separador de nombre;contraseña
-
-                    //Se leyó correctamente el nombre
-                    //leeré a lo sumo 30 bytes de contraseña
-                    while ((valread = read(new_socket, buffer, 30)) != 0) { //Hasta encontrar un EOF
-                        if (valread < 0) {
-                            perror("Error al leer el nombre del cliente\n");
-                            break;
-                        }
-                        // No hubo error al leer, sólo que no hay EOF, coloco lo que llevo en el archivo
-                        fprintf(archivoClientes, "%s", buffer);
-                        memset(buffer, 0, BUFFER_SIZE);
-                    }
-                    fprintf(archivoClientes, "\n");//Finalizo
-                    //Coloco código de respuesta
-                    strncpy(buffer, "1", 1);
-
-                    close(new_socket);//Ya terminé con la conexión
-                    break;
-                }
-                case 1:{
-                    //tengo que iniciar sesión con un usuario
-                    printf("Iniciar Sesión\n");
-
-                }
-                default:{
-                    printf("Unrecognized option\n");
-                }
+            }
+            default:{
+                printf("Unrecognized option\n");
             }
         }
     }
