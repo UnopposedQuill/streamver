@@ -53,7 +53,7 @@ CMAKE_BINARY_DIR = "/home/esteban/Descargas/Principios de Sistemas Operativos/Pr
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/text_client.dir/all
+all: CMakeFiles/text_client.exe.dir/all
 
 .PHONY : all
 
@@ -63,36 +63,36 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/text_client.dir/clean
+clean: CMakeFiles/text_client.exe.dir/clean
 
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/text_client.dir
+# Target rules for target CMakeFiles/text_client.exe.dir
 
 # All Build rule for target.
-CMakeFiles/text_client.dir/all:
-	$(MAKE) -f CMakeFiles/text_client.dir/build.make CMakeFiles/text_client.dir/depend
-	$(MAKE) -f CMakeFiles/text_client.dir/build.make CMakeFiles/text_client.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/esteban/Descargas/Principios de Sistemas Operativos/Proyectos/Proyecto 1/streamver/text-client/cmake-build-debug/CMakeFiles" --progress-num=1,2 "Built target text_client"
-.PHONY : CMakeFiles/text_client.dir/all
+CMakeFiles/text_client.exe.dir/all:
+	$(MAKE) -f CMakeFiles/text_client.exe.dir/build.make CMakeFiles/text_client.exe.dir/depend
+	$(MAKE) -f CMakeFiles/text_client.exe.dir/build.make CMakeFiles/text_client.exe.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/esteban/Descargas/Principios de Sistemas Operativos/Proyectos/Proyecto 1/streamver/text-client/cmake-build-debug/CMakeFiles" --progress-num=1,2 "Built target text_client.exe"
+.PHONY : CMakeFiles/text_client.exe.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/text_client.dir/rule: cmake_check_build_system
+CMakeFiles/text_client.exe.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start "/home/esteban/Descargas/Principios de Sistemas Operativos/Proyectos/Proyecto 1/streamver/text-client/cmake-build-debug/CMakeFiles" 2
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/text_client.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/text_client.exe.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "/home/esteban/Descargas/Principios de Sistemas Operativos/Proyectos/Proyecto 1/streamver/text-client/cmake-build-debug/CMakeFiles" 0
-.PHONY : CMakeFiles/text_client.dir/rule
+.PHONY : CMakeFiles/text_client.exe.dir/rule
 
 # Convenience name for target.
-text_client: CMakeFiles/text_client.dir/rule
+text_client.exe: CMakeFiles/text_client.exe.dir/rule
 
-.PHONY : text_client
+.PHONY : text_client.exe
 
 # clean rule for target.
-CMakeFiles/text_client.dir/clean:
-	$(MAKE) -f CMakeFiles/text_client.dir/build.make CMakeFiles/text_client.dir/clean
-.PHONY : CMakeFiles/text_client.dir/clean
+CMakeFiles/text_client.exe.dir/clean:
+	$(MAKE) -f CMakeFiles/text_client.exe.dir/build.make CMakeFiles/text_client.exe.dir/clean
+.PHONY : CMakeFiles/text_client.exe.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.
