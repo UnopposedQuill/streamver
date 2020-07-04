@@ -7,6 +7,7 @@
 #include <netinet/in.h>
 #include <signal.h>
 #include <libnet.h>
+#include "estructuras.h"
 
 #define BUFFER_SIZE 512
 
@@ -25,17 +26,6 @@ void *attendClient(void *argument){
 }
 
 int main() {
-    /*
-    printf("Hello, World!\n");
-    int a = 5;
-    pthread_t hilo[3];
-    for (int i = 0; i < 3; ++i) {
-        pthread_create(&hilo[i], NULL, work, &a);
-    }
-    for (int i = 0; i < 3; ++i) {
-        pthread_join(hilo[i], NULL);
-    }
-    */
 
     //<editor-fold defaultstate="collapsed" desc="Configuración del Servidor">
 
@@ -69,12 +59,21 @@ int main() {
     act.sa_handler = intHandler;
     sigaction(SIGINT, &act, NULL);
 
-    //Finalmente a colocar los manejadores de Pthreads
+    //Colocar los manejadores de Pthreads
     pthread_t hilos[maximoClientesConectados];
-    short ocupados[maximoClientesConectados];
+
+    //Finalmente la información con la cual trabajarán los hilos
+    struct ThreadInformation threadInformation[maximoClientesConectados];
+    char buffersHilos[maximoClientesConectados][BUFFER_SIZE];
+
+    //Emparejo cada hilo con su buffer a usar a discreción, y limpio sus sockets
+    for (int i = 0; i < maximoClientesConectados; ++i) {
+        threadInformation[i].socket = NULL;
+        threadInformation[i].buffer = buffersHilos[i];
+    }
 
     //El buffer con el que trabajará el servidor
-    char buffer[BUFFER_SIZE] = {0};
+    char buffer[BUFFER_SIZE];memset(buffer, 0, BUFFER_SIZE);
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Configuración de Socket atendedor">
@@ -128,13 +127,12 @@ int main() {
         printf("Solicitud Entrante\n");
 
         //Primero tengo que leer el primer byte, el cual me dirá qué acción tengo que tomar
-        if ((valread = read(new_socket, buffer, 1)) < 0) {
+        if ((valread = read(new_socket, buffer, 1)) <= 0) {
             perror("Error upon reading new data\n");
             continue;
         }
 
         //en este momento valread contiene la cantidad de bytes leídos
-        //Por ahora sólo le ordenaré al servidor imprimir todo lo que lee
         char directiva = buffer[0] - '0';
         switch (directiva) {
             case 0: {
@@ -147,7 +145,7 @@ int main() {
                     //Leeré 30 caracteres hasta encontrar un salto de línea en el buffer
                     valread = read(new_socket, buffer, 30);
 
-                    if (valread < 0) {
+                    if (valread <= 0) {
                         perror("Error al leer el nombre del cliente\n");
                         break;
                     }
@@ -155,14 +153,14 @@ int main() {
                     fprintf(archivoClientes, "%s", buffer);
                 } while (!strchr(buffer, '\n'));
 
-                if (valread < 0){
+                if (valread <= 0){
                     break; //muevo el error hacia adelante para que salga del switch
                 }
 
                 //Coloco código de respuesta
                 strncpy(buffer, "1", 1);
 
-                if ((valread = send(new_socket, buffer, 1, 0)) < 0){
+                if ((valread = send(new_socket, buffer, 1, 0)) <= 0){
                     perror("Error al comunicar estado de transacción\n");
                 }
 
@@ -175,9 +173,49 @@ int main() {
                 //tengo que iniciar sesión con un usuario
                 printf("Iniciar Sesión\n");
 
+                //primero verificar la disponibilidad de los hilos
+                int hiloSeleccionado;
+                for (hiloSeleccionado = 0; hiloSeleccionado < maximoClientesConectados; hiloSeleccionado++) {
+                    if (threadInformation[hiloSeleccionado].socket == NULL) {
+                        //está disponible
+                        break;
+                    }
+                }
+                //Si el ciclo termina a medio camino había uno disponible
+                if (hiloSeleccionado >= maximoClientesConectados){
+                    strncpy(buffer, "0", 1);
+                    if ((valread = send(new_socket, buffer, 1, 0)) <= 0){
+                        perror("Error al comunicar fallo de transacción\n");
+                    }
+                    //Cierro y termino
+                    close(new_socket);
+                    break;
+                }
+                //Había uno disponible, aviso al cliente que puedo tomar su solicitud
+                strncpy(buffer, "0", 1);
+                if ((valread = send(new_socket, buffer, 1, 0)) <= 0){
+                    perror("Error al comunicar fallo de transacción\n");
+                    close(new_socket);
+                    break;
+                }
+
+                //Tengo que autentificar al usuario
+                //Primero voy a rebobinar el archivo por si algo más utilizó el archivo
+                fseek(archivoClientes, 0, SEEK_SET);
+
+                //Ahora a buscar el archivo
+                fscanf(archivoClientes, "");
+
+                // establezco el socket dentro del hilo
+                threadInformation[hiloSeleccionado].socket = new_socket;
+
+
+                break;
             }
             default:{
                 printf("Unrecognized option\n");
+                close(new_socket);
+                break;
             }
         }
     }

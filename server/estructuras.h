@@ -9,8 +9,8 @@
  * This struct will contain the data for each of the threads to properly attend its clients
  */
 struct ThreadInformation{
-    char * nombre;
-
+    char * buffer;
+    int socket;
 };
 
 #endif //SERVER_ESTRUCTURAS_H

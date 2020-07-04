@@ -30,8 +30,10 @@ int main() {
     }
 
     //El buffer que contendrá los datos que se le enviarán al servidor
-    char buffer[BUFFER_SIZE];
-    memset(buffer, 0, BUFFER_SIZE);
+    char buffer[BUFFER_SIZE];memset(buffer, 0, BUFFER_SIZE);
+
+    //El buffer dedicado a la IO interna del programa
+    char ioBuffer[BUFFER_SIZE];memset(ioBuffer, 0, BUFFER_SIZE);
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Conexión Inicial">
@@ -59,6 +61,8 @@ int main() {
         return EXIT_FAILURE;
     }
 
+    printf("Intentando conectar con servidor: %s\n", direccionServidor);
+
     //Ahora intento conectar con el servidor
     if (connect(socket_handler, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) {
         perror("Couldn't connect to server\n");
@@ -66,7 +70,7 @@ int main() {
     }
 
     //Coloco el paquete de inicio dentro del buffer
-    sprintf(buffer, "0%s;%s\n", nombre, contrasenha);
+    sprintf(buffer, "1%s;%s\n", nombre, contrasenha);
 
     //Coloco la solicitud
     if(send(socket_handler, buffer, 1 + strlen(nombre) + 1 + strlen(contrasenha) + 1, 0) < 0){
@@ -86,5 +90,42 @@ int main() {
 
     //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Ciclo de Solicitudes">
+    short activo = 1;
+
+    while (activo) {
+        printf("Conexión exitosa\n"
+               "Bienvenido a Streamver\n"
+               "\n"
+               "1. Enviar Archivo\n"
+               "2. Recibir Archivo\n"
+               "3. Salir\n"
+               "\n"
+               "Ingrese un comando: ");
+
+        switch (fgetc(stdin)) {
+            case '1': {
+                //Enviar un archivo
+                //Primero conseguir el nombre del archivo
+                fgets(ioBuffer, BUFFER_SIZE, stdin);
+                break;
+            }
+            case '2': {
+                //Recibir un archivo
+                fgets(ioBuffer, BUFFER_SIZE, stdin);
+                break;
+            }
+            case '3': {
+                //Salir
+                activo = 0;
+                break;
+            }
+            default: {
+                //Error
+                printf("Por favor ingrese una opción válida\n");
+            }
+        }
+    }
+    //</editor-fold>
     return EXIT_SUCCESS;
 }
