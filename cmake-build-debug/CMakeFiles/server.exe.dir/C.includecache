@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/esteban/Documentos/Github/streamver/server/estructuras.h
+
+/home/esteban/Documentos/Github/streamver/server/main.c
+stdio.h
+-
+stdlib.h
+-
+pthread.h
+-
+unistd.h
+-
+sys/socket.h
+-
+netinet/in.h
+-
+signal.h
+-
+libnet.h
+-
+estructuras.h
+/home/esteban/Documentos/Github/streamver/server/estructuras.h
+

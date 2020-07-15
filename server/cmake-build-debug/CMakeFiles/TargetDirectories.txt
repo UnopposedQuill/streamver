@@ -1,3 +1,0 @@
-/home/esteban/Descargas/Principios de Sistemas Operativos/Proyectos/Proyecto 1/streamver/server/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/esteban/Descargas/Principios de Sistemas Operativos/Proyectos/Proyecto 1/streamver/server/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/esteban/Descargas/Principios de Sistemas Operativos/Proyectos/Proyecto 1/streamver/server/cmake-build-debug/CMakeFiles/server.exe.dir

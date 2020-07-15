@@ -1,0 +1,4 @@
+/home/esteban/Documentos/Github/streamver/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/esteban/Documentos/Github/streamver/cmake-build-debug/CMakeFiles/text_client.exe.dir
+/home/esteban/Documentos/Github/streamver/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/esteban/Documentos/Github/streamver/cmake-build-debug/CMakeFiles/server.exe.dir

@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/esteban/Documentos/Github/streamver/text-client/main.c
+stdio.h
+-
+stdlib.h
+-
+netinet/in.h
+-
+string.h
+-
+unistd.h
+-
+libnet.h
+-
+
