@@ -6,19 +6,17 @@
 
 #IncludeRegexTransform: 
 
-/home/esteban/Descargas/Principios de Sistemas Operativos/Proyectos/Proyecto 1/streamver/server/main.c
+/home/esteban/Descargas/Principios de Sistemas Operativos/Proyectos/Proyecto 1/streamver/text-client/main.c
 stdio.h
 -
 stdlib.h
 -
-pthread.h
+netinet/in.h
+-
+string.h
 -
 unistd.h
 -
-sys/socket.h
--
-netinet/in.h
--
-signal.h
+libnet.h
 -
 

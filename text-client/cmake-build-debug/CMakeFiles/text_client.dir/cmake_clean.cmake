@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
+  "../bin/text_client"
+  "../bin/text_client.pdb"
   "CMakeFiles/text_client.dir/main.c.o"
-  "text_client"
-  "text_client.pdb"
 )
 
 # Per-language clean rules from dependency scanning.

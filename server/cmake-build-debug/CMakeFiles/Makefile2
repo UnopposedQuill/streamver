@@ -53,7 +53,7 @@ CMAKE_BINARY_DIR = "/home/esteban/Descargas/Principios de Sistemas Operativos/Pr
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/server.dir/all
+all: CMakeFiles/server.exe.dir/all
 
 .PHONY : all
 
@@ -63,36 +63,36 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/server.dir/clean
+clean: CMakeFiles/server.exe.dir/clean
 
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/server.dir
+# Target rules for target CMakeFiles/server.exe.dir
 
 # All Build rule for target.
-CMakeFiles/server.dir/all:
-	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/depend
-	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/esteban/Descargas/Principios de Sistemas Operativos/Proyectos/Proyecto 1/streamver/server/cmake-build-debug/CMakeFiles" --progress-num=1,2 "Built target server"
-.PHONY : CMakeFiles/server.dir/all
+CMakeFiles/server.exe.dir/all:
+	$(MAKE) -f CMakeFiles/server.exe.dir/build.make CMakeFiles/server.exe.dir/depend
+	$(MAKE) -f CMakeFiles/server.exe.dir/build.make CMakeFiles/server.exe.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/esteban/Descargas/Principios de Sistemas Operativos/Proyectos/Proyecto 1/streamver/server/cmake-build-debug/CMakeFiles" --progress-num=1,2 "Built target server.exe"
+.PHONY : CMakeFiles/server.exe.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/server.dir/rule: cmake_check_build_system
+CMakeFiles/server.exe.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start "/home/esteban/Descargas/Principios de Sistemas Operativos/Proyectos/Proyecto 1/streamver/server/cmake-build-debug/CMakeFiles" 2
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/server.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/server.exe.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "/home/esteban/Descargas/Principios de Sistemas Operativos/Proyectos/Proyecto 1/streamver/server/cmake-build-debug/CMakeFiles" 0
-.PHONY : CMakeFiles/server.dir/rule
+.PHONY : CMakeFiles/server.exe.dir/rule
 
 # Convenience name for target.
-server: CMakeFiles/server.dir/rule
+server.exe: CMakeFiles/server.exe.dir/rule
 
-.PHONY : server
+.PHONY : server.exe
 
 # clean rule for target.
-CMakeFiles/server.dir/clean:
-	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/clean
-.PHONY : CMakeFiles/server.dir/clean
+CMakeFiles/server.exe.dir/clean:
+	$(MAKE) -f CMakeFiles/server.exe.dir/build.make CMakeFiles/server.exe.dir/clean
+.PHONY : CMakeFiles/server.exe.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.
